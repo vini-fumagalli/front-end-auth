@@ -1,0 +1,46 @@
+<section class="vh-100" style="background-color: #1e58c4;">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-xl-10">
+          <div class="card" style="border-radius: 1rem; background-color: rgb(196, 39, 39); border-color: #1e58c4;">
+            <div class="row g-0">
+              <div class="col-md-6 col-lg-5 d-none d-md-block">
+                <img src="assets/AngularToolKit_Banner (1).png"
+                  alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+              </div>
+              <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                <div class="card-body p-4 p-lg-5 text-black">
+                  <form>
+                    <div class="d-flex align-items-center mb-3 pb-1">
+                      <span class="h1 fw-bold mb-0" style="color: #fff">Cadastro de Usuário</span>
+                    </div>
+                    <div class="form-outline mb-3">
+                      <label class="form-label" for="form2Example17" style="font-weight:600;">Email</label>
+                      <input type="email" name="email" 
+                      id="form2Example17" [(ngModel)]="newUser.email" class="form-control" placeholder="Seu email aqui..."/>
+                    </div>
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="form2Example27" style="font-weight:600;">Senha</label>
+                      <input type="password" name="password" 
+                      id="form2Example27" [(ngModel)]="newUser.password" class="form-control" placeholder="Sua senha aqui..."/>
+                    </div>
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="form2Example28" style="font-weight:600;">Confirme a senha</label>
+                      <input type="password" name="password" 
+                      id="form2Example28" [(ngModel)]="newUser.confirmPassword" class="form-control" placeholder="Confirme sua senha aqui..."/>
+                    </div>
+                    <div class="pt-1 mb-4">
+                      <button class="btn btn-dark btn-lg btn-block" type="button" (click)="register()">Cadastrar</button>
+                    </div>
+                    <p class="mb-1 pb-lg-0" style="color: #fff;">Já tem uma conta? <a routerLink="/login"
+                        style="color: black;">Entre aqui</a></p>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+<p-toast></p-toast>
