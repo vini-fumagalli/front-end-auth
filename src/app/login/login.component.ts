@@ -20,17 +20,6 @@ export class LoginComponent {
     ) { }
   
   async login() {
-    
-    // (await this.apiService.enviarDados('auth/sign-in', this.user))
-    // .subscribe((res: Resposta) => {
-    //   if(res.sucesso) {
-    //     this.msgService.add({ severity:'success', summary:'Sucesso', detail:res.mensagem});
-    //     sessionStorage.setItem('token', res.data.accessToken);
-    //     sessionStorage.setItem('usuario', res.data.userToken.email);
-    //   } 
-    // }, (fail: HttpErrorResponse) => {
-    //     this.msgService.add({ severity:'error', summary:'Erro', detail: fail.error.mensagem});
-    //   })
 
     (await this.apiService.enviarDados('auth/sign-in', this.user))
     .subscribe(
@@ -47,6 +36,20 @@ export class LoginComponent {
         }
       }
     )
+  }
+
+  async saudacao() {
+
+    (await this.apiService.receberDados('auth/saudacao')) 
+    .subscribe(
+      {
+        next: (res:Resposta) => {
+          this.msgService.add({ severity:'success', summary:'Sucesso', detail: res.data });
+        },
+        error: () => {
+          this.msgService.add({ severity:'error', summary:'Erro', detail: 'Você não tem permissão para isso' });
+        }
+      })
   }
   
 }
