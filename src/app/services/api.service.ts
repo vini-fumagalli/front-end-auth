@@ -11,20 +11,20 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  getHeader(): HttpHeaders {
-    return new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${sessionStorage.getItem('token')}`
-    });
+  // getHeader(): HttpHeaders {
+  //   return new HttpHeaders({
+  //     'Content-Type': 'application/json',
+  //     'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+  //   });
+  // }
+
+  async enviarDados(endpoint: string, parameter: any): Promise<Observable<Resposta>> {
+    return this.http
+      .post<Resposta>(`${API_URL}/${endpoint}`, parameter);
   }
 
-  async enviarDados(endpoint:string, parameter:any): Promise<Observable<Resposta>> {
+  async receberDados(endpoint: string): Promise<Observable<Resposta>> {
     return this.http
-    .post<Resposta>(`${API_URL}/${endpoint}`, parameter, { headers:this.getHeader() });
-  }
-
-  async receberDados(endpoint:string): Promise<Observable<Resposta>> {
-    return this.http
-    .get<Resposta>(`${API_URL}/${endpoint}`, { headers: this.getHeader() });
+      .get<Resposta>(`${API_URL}/${endpoint}`);
   }
 }

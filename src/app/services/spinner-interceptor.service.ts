@@ -14,15 +14,21 @@ import { SpinnerService } from './spinner.service';
   providedIn: 'root'
 })
 export class HttpInterceptorService implements HttpInterceptor {
-  constructor(private spinnerService: SpinnerService) {}
+  constructor(private spinnerService: SpinnerService) { }
 
-  
+
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    this.spinnerService.show(); 
-    return next.handle(req).pipe(
+    this.spinnerService.show();
+    const tokenReq = req.clone({
+      setHeaders: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+      },
+    });
+    return next.handle(tokenReq).pipe(
       finalize(() => {
         this.spinnerService.hide();
       })
