@@ -3,7 +3,7 @@ import { LoginUserViewModel } from '../api/loginUserViewModel';
 import { ApiService } from '../services/api.service';
 import { Resposta } from '../api/resposta';
 import { MessageService } from 'primeng/api';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
