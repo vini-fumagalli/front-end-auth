@@ -8,13 +8,17 @@ import {
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { SpinnerService } from './spinner.service';
+import { AuthService } from '../security/auth.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpInterceptorService implements HttpInterceptor {
-  constructor(private spinnerService: SpinnerService) { }
+  constructor(
+    private spinnerService: SpinnerService,
+    private authService:AuthService
+    ) { }
 
 
   intercept(
@@ -25,7 +29,7 @@ export class HttpInterceptorService implements HttpInterceptor {
     const tokenReq = req.clone({
       setHeaders: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionStorage.getItem('token')}`
+        'Authorization': `Bearer ${this.authService.getToken()}`
       },
     });
     return next.handle(tokenReq).pipe(

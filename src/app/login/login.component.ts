@@ -4,6 +4,7 @@ import { ApiService } from '../services/api.service';
 import { Resposta } from '../api/resposta';
 import { MessageService } from 'primeng/api';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent {
   
   constructor(
     private apiService:ApiService, 
-    private msgService:MessageService
+    private msgService:MessageService,
+    private router:Router
     ) { }
   
   async login() {
@@ -27,9 +29,11 @@ export class LoginComponent {
         next: (res:Resposta) => {
         this.msgService.add({ severity:'success', summary:'Sucesso', detail:res.mensagem});
         sessionStorage.setItem('token', res.data.accessToken);
+        sessionStorage.setItem('expiresAt', res.data.expiresAt);
         sessionStorage.setItem('usuario', res.data.userToken.email);
         sessionStorage.setItem('perfil', res.data.userToken.claims[0].type);
         sessionStorage.setItem('permissoes', res.data.userToken.claims[0].value);
+        this.router.navigate(['/home']);
         },
         error: (fail:HttpErrorResponse) => {
           this.msgService.add({ severity:'error', summary:'Erro', detail:fail.error.mensagem });
