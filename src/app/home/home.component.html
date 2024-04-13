@@ -1,5 +1,22 @@
 <section class="vh-100" style="background-color: #1e58c4;">
-    <p>Home works!</p>
+    <div class="row justify-content-center">
+        <div class="col-xl-3 mt-5">
+          <div class="card mt-5">
+            <div class="card-body">
+              <h4 class="card-title">Você está <br>Autenticado!!</h4>
+              <p class="card-text">Clique no botão abaixo para adicionar a permissão de <b>Administrador.</b></p>
+              <button class="btn btn-dark" type="button" (click)="addClaim()" [disabled]="isAdm">Administrador</button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="isAdm" class="col-xl-3 mt-5">
+          <div class="card mt-5">
+            <div class="card-body">
+              <h4 class="card-title">Agora você é um Administrador!!</h4>
+              <p class="card-text">Clique no botão abaixo para receber suas saudações</p>
+              <button class="btn btn-dark" type="button" (click)="saudacao()">Saudações</button>
+            </div>
+          </div>
+        </div>
+      </div>
 </section>
-
-<p-toast></p-toast>
