@@ -31,8 +31,12 @@ export class LoginComponent {
         sessionStorage.setItem('token', res.data.accessToken);
         sessionStorage.setItem('expiresAt', res.data.expiresAt);
         sessionStorage.setItem('usuario', res.data.userToken.email);
-        sessionStorage.setItem('perfil', res.data.userToken.claims[0].type);
-        sessionStorage.setItem('permissoes', res.data.userToken.claims[0].value);
+
+        if(res.data.userToken.claims.length > 0) {
+          sessionStorage.setItem('perfil', res.data.userToken.claims[0].type);
+          sessionStorage.setItem('permissoes', res.data.userToken.claims[0].value);
+        }
+
         this.router.navigate(['/home']);
         },
         error: (fail:HttpErrorResponse) => {
@@ -40,20 +44,6 @@ export class LoginComponent {
         }
       }
     )
-  }
-
-  async saudacao() {
-
-    (await this.apiService.receberDados('auth/saudacao')) 
-    .subscribe(
-      {
-        next: (res:Resposta) => {
-          this.msgService.add({ severity:'success', summary:'Sucesso', detail: res.data });
-        },
-        error: () => {
-          this.msgService.add({ severity:'error', summary:'Erro', detail: 'Você não tem permissão para isso' });
-        }
-      })
   }
   
 }
