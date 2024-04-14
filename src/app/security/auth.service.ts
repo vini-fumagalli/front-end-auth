@@ -19,9 +19,6 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    if(this.router.url !== '/cadastro-usuario') {
-      return true;
-    }
     
     const token = this.getToken();
     if(token === null) {

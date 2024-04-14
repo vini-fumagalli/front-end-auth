@@ -8,19 +8,11 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'front-auth';
 
   constructor(
-    public spinnerService: SpinnerService,
-    private authService: AuthService, 
-    private router:Router
+    public spinnerService: SpinnerService
     ) { }
-
-    ngOnInit(): void {
-      if (!this.authService.isLoggedIn()) {
-        this.router.navigate(['/login']);
-      }
-    }
 
 }
