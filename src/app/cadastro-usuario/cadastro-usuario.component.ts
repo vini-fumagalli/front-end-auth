@@ -48,7 +48,7 @@ export class CadastroUsuarioComponent {
           if(fail.status === 409) {
             return this.msgService.add({ severity: 'error', summary: 'Erro', detail: fail.error });
           }
-          this.msgService.add({ severity: 'error', summary: 'Erro', detail: 'Ocorreu um erro ao enviar o email. Por favor tente novamente' });
+          this.msgService.add({ severity: 'error', summary: 'Erro', detail: 'Ocorreu um erro inesperado. Por favor tente novamente' });
         }
       }
     )
