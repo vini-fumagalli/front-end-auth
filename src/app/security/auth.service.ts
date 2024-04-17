@@ -27,8 +27,9 @@ export class AuthService {
     }
 
     const expiresAt = this.getExpiresAt();
-    const expiresTime = expiresAt ? new Date(expiresAt).getTime() : null;
-    if(expiresTime !== null && Date.now() > expiresTime) {
+    const expiresTime = expiresAt ? new Date(expiresAt) : null;
+    const currentTime = new Date();
+    if(expiresTime !== null && currentTime > expiresTime) {
         sessionStorage.clear();
         return false;
     }
