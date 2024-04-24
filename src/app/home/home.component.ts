@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 import { createClaimViewModel } from '../api/createClaimViewModel';
 import { Resposta } from '../api/resposta';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LoginResponseViewModel } from '../api/loginResponseViewModel';
 
 @Component({
   selector: 'app-home',
@@ -36,13 +37,15 @@ export class HomeComponent implements OnInit {
     .subscribe(
       {
         next: (res:Resposta) => {
-          sessionStorage.setItem('token', res.data.accessToken);
-          sessionStorage.setItem('expiresAt', res.data.expiresAt);
-          sessionStorage.setItem('usuario', res.data.userToken.email);
+          const data = res.data as LoginResponseViewModel;
+          sessionStorage.setItem('token', data.accessToken);
+          sessionStorage.setItem('expiresAt', data.expiresAt.toString());
+          sessionStorage.setItem('usuario', data.userToken.email);
 
-          if(res.data.userToken.claims.length > 0) {
-            sessionStorage.setItem('perfil', res.data.userToken.claims[0].type);
-            sessionStorage.setItem('permissoes', res.data.userToken.claims[0].value);
+          const claims = data.userToken.claims[0];
+          if(res.data.userToken.claims.length > 0 && claims.type !== null && claims.value !== null) {
+            sessionStorage.setItem('perfil', claims.type);
+            sessionStorage.setItem('permissoes', claims.value);
           }
           this.msgService.add({ severity:'success', summary:'Sucesso', detail:'Admnistrador adicionado com sucesso' });
           setTimeout(() => {

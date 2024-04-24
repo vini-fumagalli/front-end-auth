@@ -5,6 +5,7 @@ import { Resposta } from '../api/resposta';
 import { MessageService } from 'primeng/api';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { LoginResponseViewModel } from '../api/loginResponseViewModel';
 
 @Component({
   selector: 'app-login',
@@ -27,14 +28,16 @@ export class LoginComponent {
     .subscribe(
       {
         next: (res:Resposta) => {
+        const data = res.data as LoginResponseViewModel;
         this.msgService.add({ severity:'success', summary:'Sucesso', detail:res.mensagem});
-        sessionStorage.setItem('token', res.data.accessToken);
-        sessionStorage.setItem('expiresAt', res.data.expiresAt);
-        sessionStorage.setItem('usuario', res.data.userToken.email);
+        sessionStorage.setItem('token', data.accessToken);
+        sessionStorage.setItem('expiresAt', data.expiresAt.toString());
+        sessionStorage.setItem('usuario', data.userToken.email);
 
-        if(res.data.userToken.claims.length > 0) {
-          sessionStorage.setItem('perfil', res.data.userToken.claims[0].type);
-          sessionStorage.setItem('permissoes', res.data.userToken.claims[0].value);
+        const claims = data.userToken.claims[0]
+        if(data.userToken.claims.length > 0 && claims.type !== null && claims.value !== null) {
+          sessionStorage.setItem('perfil', claims.type);
+          sessionStorage.setItem('permissoes', claims.value);
         }
 
         this.router.navigate(['/home']);

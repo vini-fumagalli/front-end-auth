@@ -6,6 +6,7 @@ import { MessageService } from 'primeng/api';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CodAutViewModel } from '../api/codAutViewModel';
 import { Router } from '@angular/router';
+import { LoginResponseViewModel } from '../api/loginResponseViewModel';
 
 @Component({
   selector: 'app-cadastro-usuario',
@@ -66,10 +67,11 @@ export class CadastroUsuarioComponent {
     .subscribe(
       {
         next: (res:Resposta) => {
+          const data = res.data as LoginResponseViewModel
           this.msgService.add({severity:'success', summary: 'Sucesso', detail:res.mensagem});
-          sessionStorage.setItem('token', res.data.accessToken);
-          sessionStorage.setItem('expiresAt', res.data.expiresAt);
-          sessionStorage.setItem('usuario', res.data.userToken.email);
+          sessionStorage.setItem('token', data.accessToken);
+          sessionStorage.setItem('expiresAt', data.expiresAt.toString());
+          sessionStorage.setItem('usuario', data.userToken.email);
           this.router.navigate(['/home'])
         },
         error: (fail:HttpErrorResponse) => {
